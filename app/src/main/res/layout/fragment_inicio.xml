@@ -5,15 +5,54 @@
     android:layout_height="match_parent"
     tools:context=".InicioFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="30dp"
-        android:textColor="@color/rosa"
-        android:fontFamily="sans-serif-black"
-        android:textSize="40dp"
-        android:text="Inicio" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/rosa"
+            android:fontFamily="sans-serif-black"
+            android:textSize="40dp"
+            android:text="Inicio" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                android:textColor="@color/rosa"
+                android:textSize="30dp"
+                android:text="Botón de Panico" />
+
+            <Button
+                android:id="@+id/circularButton"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:background="@drawable/circular_button_background"
+                android:text="S.O.S"
+                android:textSize="70dp"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:gravity="center"
+                android:layout_centerInParent="true"/>
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+    <!-- TODO: Update blank fragment layout -->
+
+
+
 
 </FrameLayout>

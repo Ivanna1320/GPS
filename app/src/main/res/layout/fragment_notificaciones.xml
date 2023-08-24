@@ -2,18 +2,82 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".NotificacionesFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/titulo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:textColor="@color/rosa"
         android:fontFamily="sans-serif-black"
-        android:textSize="40dp"
-        android:text="Notificaiones" />
+        android:gravity="center_horizontal"
+        android:text="Notificaiones"
+        android:textColor="@color/rosa"
+        android:textSize="40dp" />
+
+    <LinearLayout
+        android:id="@+id/contenedor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/titulo">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <RelativeLayout
+            android:id="@+id/desing_noti"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="center"
+            android:background="@drawable/border_edittext"
+            android:backgroundTint="@color/gris"
+            android:layout_margin="15dp"
+            android:layout_below="@+id/titulo">
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- Agrega las vistas para el primer LinearLayout aquí -->
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/aceptar"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginLeft="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="LISTO"
+                        android:textSize="20dp"
+                        android:fontFamily="sans-serif-black"
+                        android:textColor="@color/rosa"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="20dp"
+                        android:text="Fulanito ha aceptado tu solicitud"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
 
 </FrameLayout>
