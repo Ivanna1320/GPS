@@ -37,13 +37,13 @@
                 android:id="@+id/circularButton"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
-                android:background="@drawable/circular_button_background"
-                android:text="S.O.S"
-                android:textSize="70dp"
-                android:textColor="#FFFFFF"
-                android:textAllCaps="false"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@drawable/circular_button_background"
                 android:gravity="center"
-                android:layout_centerInParent="true"/>
+                android:text="S.O.S"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="70dp" />
 
         </RelativeLayout>
 
