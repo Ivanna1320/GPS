@@ -51,10 +51,10 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/etxtemail"
+                android:id="@+id/etxt_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
+                android:inputType="textWebEmailAddress"
                 android:layout_margin="5dp"
                 android:textColor="@color/rosa"
                 android:background="@drawable/border_edittext"
@@ -71,7 +71,7 @@
                 android:textSize="20dp" />
 
             <EditText
-                android:id="@+id/etxtpassword"
+                android:id="@+id/etxt_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
