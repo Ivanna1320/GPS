@@ -12,11 +12,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class PerfilFragment extends Fragment {
 
-    private Button aggContacto;
+    private Button aggContacto, btnCerrar;
+    FirebaseAuth mAuth;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -44,7 +46,9 @@ public class PerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
+        mAuth = FirebaseAuth.getInstance();
         aggContacto = view.findViewById(R.id.agg_contac); // Asignar el botón por su ID
+        btnCerrar = view.findViewById(R.id.btn_cerrar);
 
         aggContacto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,16 @@ public class PerfilFragment extends Fragment {
                 alert.setView(vi);
                 AlertDialog a3 = alert.create();
                 a3.show();
+            }
+        });
+
+        btnCerrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
 
