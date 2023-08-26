@@ -17,10 +17,10 @@
             android:layout_marginTop="30dp"
             android:textColor="@color/rosa"
             android:fontFamily="sans-serif-black"
-            android:textSize="40dp"
+            android:textSize="30sp"
             android:text="Perfil" />
 
-        <ScrollView
+        <RelativeLayout
             android:id="@+id/content_scroll"
             android:layout_below="@+id/title_perfil"
             android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Fulanito"
-                        android:textSize="28dp"
+                        android:textSize="20sp"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="10dp"/>
 
@@ -61,7 +61,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="000-000-000"
-                        android:textSize="28dp"
+                        android:textSize="20sp"
                         android:fontFamily="sans-serif-black"
                         android:gravity="center_horizontal"
                         android:layout_marginTop="10dp"/>
@@ -75,7 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_margin="20dp">
+                    android:layout_margin="20sp">
 
                     <LinearLayout
                         android:id="@+id/datos_email"
@@ -86,7 +86,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Correo: "
-                            android:textSize="25dp"/>
+                            android:textSize="21sp"/>
 
                         <TextView
                             android:id="@+id/txt_email"
@@ -94,7 +94,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="ejemplo@ucol.mx"
-                            android:textSize="25dp"
+                            android:textSize="20sp"
                             android:textColor="@color/morado"/>
                     </LinearLayout>
                     <LinearLayout
@@ -108,7 +108,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Celular: "
-                            android:textSize="25dp"/>
+                            android:textSize="21sp"/>
 
                         <TextView
                             android:id="@+id/txt_cel"
@@ -116,7 +116,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="314 123 4567"
-                            android:textSize="25dp"
+                            android:textSize="20sp"
                             android:textColor="@color/morado"/>
                     </LinearLayout>
 
@@ -140,7 +140,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:text="Ver contacto"
-                            android:textSize="20dp"/>
+                            android:textSize="20sp"/>
                     </LinearLayout>
 
                     <RelativeLayout
@@ -150,13 +150,13 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_horizontal"
-                        android:layout_marginTop="50dp">
+                        android:layout_marginTop="50sp">
 
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Cerrar Sesión"
-                            android:textSize="20dp"
+                            android:textSize="20sp"
                             android:backgroundTint="@color/rojo"/>
 
                     </RelativeLayout>
@@ -170,7 +170,7 @@
 
             </RelativeLayout>
 
-        </ScrollView>
+        </RelativeLayout>
 
     </RelativeLayout>
 

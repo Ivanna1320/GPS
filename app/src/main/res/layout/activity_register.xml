@@ -74,6 +74,25 @@
                 android:minHeight="48dp" />
 
             <TextView
+                android:id="@+id/txtcelular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:text="Celular"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/etxtcelular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="000 000 0000"
+                android:inputType="number"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_edittext"
+                android:minHeight="48dp" />
+            <TextView
                 android:id="@+id/txtemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -105,6 +124,28 @@
 
             <EditText
                 android:id="@+id/etxtpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textcor"
+                app:counterEnabled="true"
+                android:minHeight="48dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/border_edittext"
+                android:inputType="textPassword"
+                tools:ignore="SpeakableTextPresentCheck"
+                android:hint="********"/>
+            <TextView
+                android:id="@+id/txtpasswordconfirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="20dp"
+                android:text="Confirmar contraseña"
+                android:textColor="@color/black"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/etxtpasswordconfirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/textcor"
