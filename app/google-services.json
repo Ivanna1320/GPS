@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033258505196",
+    "project_id": "sosgps-b569a",
+    "storage_bucket": "sosgps-b569a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033258505196:android:8d030b1cc08c6b4d1ce6c9",
+        "android_client_info": {
+          "package_name": "com.example.gpssos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033258505196-6en6a0udgq21l7m8ve2n4mncd6tru8lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCcOeUWNYzcoosH7hiKs75bFJQS4yuYugU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033258505196-6en6a0udgq21l7m8ve2n4mncd6tru8lp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
