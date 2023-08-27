@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                         // Generar un número aleatorio de 9 dígitos
                         Random random = new Random();
-                        int numeroAleatorio = random.nextInt(900000000) + 100000000;
+                        String numeroAleatorio = String.valueOf(random.nextInt(900000000) + 100000000);
                         Timestamp fecha = Timestamp.now();
 
                         Map<String, Object> map = new HashMap<>();
