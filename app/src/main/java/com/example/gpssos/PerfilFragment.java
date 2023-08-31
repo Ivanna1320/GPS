@@ -1,9 +1,11 @@
 package com.example.gpssos;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -12,8 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,6 +27,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.concurrent.Executor;
 
@@ -109,14 +116,51 @@ public class PerfilFragment extends Fragment {
         });*/
 
         aggContacto.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(requireContext());
                 LayoutInflater in = getLayoutInflater();
                 View vi = in.inflate(R.layout.activity_agregar_contacto, null);
+                final EditText txtidentificacion = vi.findViewById(R.id.edit_id);
+                final TextView txtnombre = vi.findViewById(R.id.texto_nombre);
+                final TextView txtcelular = vi.findViewById(R.id.texto_celular);
+                final Button buscar = vi.findViewById(R.id.buscar);
+                final Button agregar = vi.findViewById(R.id.buscar);
+
+
                 alert.setView(vi);
                 AlertDialog a3 = alert.create();
                 a3.show();
+
+                buscar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String searchName = txtidentificacion.getText().toString();
+                        mFirestore.collection("user").whereEqualTo("identificacion",searchName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                //lo mas complicado de hacer
+                                for (QueryDocumentSnapshot document : queryDocumentSnapshots){
+                                    String userName = document.getString("nombre");
+                                    String userPhone = document.getString("celular");
+
+                                    //campos que estan dentro del dialog alert
+                                    txtnombre.setText(userName);
+                                    txtcelular.setText(userPhone);
+
+                                }
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+                    }
+                });
+
             }
         });
 
