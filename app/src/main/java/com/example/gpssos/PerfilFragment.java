@@ -1,6 +1,7 @@
 package com.example.gpssos;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ public class PerfilFragment extends Fragment {
 
     private Button aggContacto, btnCerrar;
     private TextView txtnameUser, txtidentificadorUser, txtEmailUser, txtCelularUser;
+    private ImageButton btncopy;
     FirebaseAuth mAuth;
     FirebaseFirestore mFirestore;
 
@@ -69,6 +72,8 @@ public class PerfilFragment extends Fragment {
         txtidentificadorUser = view.findViewById(R.id.textid);
         txtEmailUser = view.findViewById(R.id.txt_email);
         txtCelularUser = view.findViewById(R.id.txt_cel);
+
+        btncopy = view.findViewById(R.id.btncopy);
 
         txtEmailUser.setText(mAuth.getCurrentUser().getEmail());
 
@@ -115,6 +120,7 @@ public class PerfilFragment extends Fragment {
             }
         });*/
 
+        //boton para abrir la pantalla para agregar un contacto
         aggContacto.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -173,9 +179,23 @@ public class PerfilFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        //boton paraq copiar el id del usuario
+        btncopy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                CharSequence textToCopy = txtidentificadorUser.getText();
+                copyToClipboard(textToCopy);
+
+            }
+        });
 
         return view;
     }
-
+    private void copyToClipboard(CharSequence text) {
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData.newPlainText("Texto Copiado", text);
+        clipboard.setPrimaryClip(clip);
+    }
 
 }
