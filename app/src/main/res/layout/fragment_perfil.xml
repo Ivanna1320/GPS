@@ -179,20 +179,10 @@
                             android:text="Cerrar Sesión"
                             android:textSize="20sp"
                             android:backgroundTint="@color/rojo"/>
-
                     </RelativeLayout>
-
-
                 </RelativeLayout>
-
-
-
-
-
             </RelativeLayout>
-
         </RelativeLayout>
-
     </RelativeLayout>
 
     <!-- TODO: Update blank fragment layout -->
