@@ -143,30 +143,36 @@ public class PerfilFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
 
+                        String myId = txtidentificadorUser.getText().toString();
                         String searchName = txtidentificacion.getText().toString();
-                        mFirestore.collection("user").whereEqualTo("identificacion",searchName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                            @Override
-                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                //lo mas complicado de hacer
-                                for (QueryDocumentSnapshot document : queryDocumentSnapshots){
-                                    String userName = document.getString("nombre");
-                                    String userPhone = document.getString("celular");
+                        if (myId.equals(searchName)){
 
-                                    //campos que estan dentro del dialog alert
-                                    txtnombre.setText(userName);
-                                    txtcelular.setText(userPhone);
+                            Toast.makeText(getActivity(), "No puedes buscar tu misma Id", Toast.LENGTH_SHORT).show();
+
+                        }else {
+                            mFirestore.collection("user").whereEqualTo("identificacion",searchName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    //lo mas complicado de hacer
+                                    for (QueryDocumentSnapshot document : queryDocumentSnapshots){
+                                        String userName = document.getString("nombre");
+                                        String userPhone = document.getString("celular");
+
+                                        //campos que estan dentro del dialog alert
+                                        txtnombre.setText(userName);
+                                        txtcelular.setText(userPhone);
+
+                                    }
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
 
                                 }
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-
-                            }
-                        });
+                            });
+                        }
                     }
                 });
-
             }
         });
 
@@ -195,7 +201,7 @@ public class PerfilFragment extends Fragment {
     private void copyToClipboard(CharSequence text) {
         android.content.ClipboardManager clipboard = (android.content.ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
         android.content.ClipData clip = android.content.ClipData.newPlainText("Texto Copiado", text);
+        Toast.makeText(getActivity(), "Id copiado", Toast.LENGTH_SHORT).show();
         clipboard.setPrimaryClip(clip);
     }
-
 }
