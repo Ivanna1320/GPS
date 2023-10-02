@@ -32,6 +32,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executor;
 
 
@@ -42,6 +44,8 @@ public class PerfilFragment extends Fragment {
     private ImageButton btncopy;
     FirebaseAuth mAuth;
     FirebaseFirestore mFirestore;
+
+    String idsol;
 
 
     public PerfilFragment() {
@@ -94,32 +98,6 @@ public class PerfilFragment extends Fragment {
             }
         });
 
-        /*mFirestore.collection("user").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if (documentSnapshot.exists()) {
-                    String nombreUser = documentSnapshot.getString("nombre");
-                    String identificadorUser = documentSnapshot.getString("identificacion");
-                    String emailUser = documentSnapshot.getString("email");
-                    String celularUser = documentSnapshot.getString("celular");
-
-                    txtnameUser.setText(nombreUser);
-                    txtidentificadorUser.setText(identificadorUser);
-                    txtEmailUser.setText(emailUser);
-                    txtCelularUser.setText(celularUser);
-                }
-            }
-        });*/
-        /*documentReference.addSnapshotListener((Executor) this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException error) {
-                nameUser.setText(documentSnapshot.getString("nombre"));
-                identidicadorUser.setText(documentSnapshot.getString("identificacion"));
-                txtEmailUser.setText(documentSnapshot.getString("email"));
-                txtCelularUser.setText(documentSnapshot.getString("celular"));
-            }
-        });*/
-
         //boton para abrir la pantalla para agregar un contacto
         aggContacto.setOnClickListener(new View.OnClickListener() {
 
@@ -132,7 +110,10 @@ public class PerfilFragment extends Fragment {
                 final TextView txtnombre = vi.findViewById(R.id.texto_nombre);
                 final TextView txtcelular = vi.findViewById(R.id.texto_celular);
                 final Button buscar = vi.findViewById(R.id.buscar);
-                final Button agregar = vi.findViewById(R.id.buscar);
+                final Button agregar = vi.findViewById(R.id.agregar);
+
+                //Dar espacio en el numero despues de que lo busque ESTA PENDIENTE
+                String txtnumber = txtcelular.getText().toString();
 
 
                 alert.setView(vi);
@@ -144,33 +125,58 @@ public class PerfilFragment extends Fragment {
                     public void onClick(View v) {
 
                         String myId = txtidentificadorUser.getText().toString();
-                        String searchName = txtidentificacion.getText().toString();
-                        if (myId.equals(searchName)){
+                        //String Id = txtidentificacion.getText().toString().trim();
+                        String searchName = txtidentificacion.getText().toString().trim();
+
+                        //es con el ischeck
+                        if (searchName.isEmpty()){
+
+                            Toast.makeText(getActivity(), "Agregar una Id", Toast.LENGTH_SHORT).show();
+
+                        } else if(myId.equals(searchName)){
 
                             Toast.makeText(getActivity(), "No puedes buscar tu misma Id", Toast.LENGTH_SHORT).show();
 
-                        }else {
-                            mFirestore.collection("user").whereEqualTo("identificacion",searchName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                                @Override
-                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                                    //lo mas complicado de hacer
-                                    for (QueryDocumentSnapshot document : queryDocumentSnapshots){
-                                        String userName = document.getString("nombre");
-                                        String userPhone = document.getString("celular");
+                        } else {
+                                mFirestore.collection("user").whereEqualTo("identificacion",searchName).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot documentSnapshots) {
 
-                                        //campos que estan dentro del dialog alert
-                                        txtnombre.setText(userName);
-                                        txtcelular.setText(userPhone);
+                                        if (documentSnapshots.isEmpty()){
 
+                                            Toast.makeText(getActivity(), "Id no encontrado", Toast.LENGTH_SHORT).show();
+                                            txtnombre.setText("---");
+                                            txtcelular.setText("000 000 0000");
+
+                                        }else {
+
+                                            //lo mas complicado de hacer
+                                            for (QueryDocumentSnapshot document : documentSnapshots){
+                                                String userName = document.getString("nombre");
+                                                String userPhone = document.getString("celular");
+                                                idsol = document.getString("id");
+
+                                                //campos que estan dentro del dialog alert
+                                                txtnombre.setText(userName);
+                                                txtcelular.setText(userPhone);
+
+                                            }
+                                        }
                                     }
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-
-                                }
-                            });
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                    }
+                                });
                         }
+                    }
+                });
+                agregar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("id", id);
+                        mFirestore.collection("user").document(idsol).collection("idSolicitudes").document(mAuth.getCurrentUser().getUid()).set(map);
                     }
                 });
             }
