@@ -2,21 +2,23 @@ package com.example.gpssos;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +26,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -34,28 +35,25 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 
 public class PerfilFragment extends Fragment {
 
-    private Button aggContacto, btnCerrar;
+    private Button aggContacto, btnCerrar,verContac;
     private TextView txtnameUser, txtidentificadorUser, txtEmailUser, txtCelularUser;
     private ImageButton btncopy;
     FirebaseAuth mAuth;
     FirebaseFirestore mFirestore;
-
     String idsol;
+    String apellidosolicitante;
 
-
-    public PerfilFragment() {
-        // Required empty public constructor
-    }
+    //Fragments para cambiar de vista
+    RelativeLayout Vperfil;
+    fragment_contactos contactoFragment = new fragment_contactos();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
     }
 
@@ -64,11 +62,16 @@ public class PerfilFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
+        //contenedor completo del perfil
+        Vperfil = view.findViewById(R.id.Vperfil);
+
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         //UserId = mAuth.getCurrentUser().getUid();
         FirebaseUser user = mAuth.getCurrentUser();
         String id = user.getUid();
+
+        verContac = view.findViewById(R.id.ver_contac);
 
         aggContacto = view.findViewById(R.id.agg_contac); // Asignar el botón por su ID
         btnCerrar = view.findViewById(R.id.btn_cerrar);
@@ -89,6 +92,7 @@ public class PerfilFragment extends Fragment {
                     String identificadorUser = documentSnapshot.getString("identificacion");
                     String emailUser = documentSnapshot.getString("email");
                     String celularUser = documentSnapshot.getString("celular");
+                    apellidosolicitante = documentSnapshot.getString("apellido");
 
                     txtnameUser.setText(nombreUser);
                     txtidentificadorUser.setText(identificadorUser);
@@ -114,7 +118,6 @@ public class PerfilFragment extends Fragment {
 
                 //Dar espacio en el numero despues de que lo busque ESTA PENDIENTE
                 String txtnumber = txtcelular.getText().toString();
-
 
                 alert.setView(vi);
                 AlertDialog a3 = alert.create();
@@ -174,9 +177,41 @@ public class PerfilFragment extends Fragment {
                 agregar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        //String pa que jalar el nombre del usuario
+                        String idsolicitante = txtnameUser.getText().toString();
+                        String numerosolicitante = txtCelularUser.getText().toString();
                         Map<String, Object> map = new HashMap<>();
                         map.put("id", id);
-                        mFirestore.collection("user").document(idsol).collection("idSolicitudes").document(mAuth.getCurrentUser().getUid()).set(map);
+                        map.put("name",idsolicitante);
+                        map.put("surname",apellidosolicitante);
+                        map.put("celular",numerosolicitante);
+                        mFirestore.collection("user").document(idsol).collection("idNotificaciones").document(mAuth.getCurrentUser().getUid()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(getActivity(), "Ya se mando la solicitud", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                Toast.makeText(getActivity(), "no esta conectado", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        });
+                        mFirestore.collection("user").document(idsol).collection("idSolicitudes").document(mAuth.getCurrentUser().getUid()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                //Toast.makeText(getActivity(), "Ya se mando la solicitud", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                //Toast.makeText(getActivity(), "no esta conectado", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
             }
@@ -201,6 +236,16 @@ public class PerfilFragment extends Fragment {
 
             }
         });
+        //btn para cambiar la vista del fragment sin quitar el mundo de abajo
+        verContac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                loadFragment(contactoFragment);
+                Vperfil.setVisibility(View.GONE);
+
+            }
+        });
 
         return view;
     }
@@ -210,4 +255,13 @@ public class PerfilFragment extends Fragment {
         Toast.makeText(getActivity(), "Id copiado", Toast.LENGTH_SHORT).show();
         clipboard.setPrimaryClip(clip);
     }
+    public void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getChildFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.contenedor_perfil, contactoFragment);
+        transaction.commitNow();
+
+    }
+
+
 }

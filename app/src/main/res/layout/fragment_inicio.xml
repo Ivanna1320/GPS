@@ -34,7 +34,7 @@
                 android:text="Botón de Panico" />
 
             <Button
-                android:id="@+id/circularButton"
+                android:id="@+id/btnCirculo"
                 android:layout_width="350dp"
                 android:layout_height="350dp"
                 android:layout_centerInParent="true"

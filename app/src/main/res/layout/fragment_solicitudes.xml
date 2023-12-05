@@ -3,12 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/vistaNotificaciones"
-    android:background="#e5e9ed"
-    tools:context=".NotificacionesFragment">
+    android:id="@+id/vistaSolicitudes"
+    tools:context=".SolicitudesFragment">
 
     <RelativeLayout
-        android:id="@+id/Contenedor_notificaciones"
+        android:id="@+id/contenedor_solicitudes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -20,27 +19,28 @@
             android:textColor="@color/rosa"
             android:fontFamily="sans-serif-black"
             android:textSize="30sp"
-            android:text="Notificaciones" />
+            android:text="Solicitudes"/>
         <Button
-            android:id="@+id/btnSolis"
+            android:id="@+id/btnNoti"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
-            android:text="Ver solicitudes"
+            android:text="Notificaciones"
             android:layout_below="@id/title_perfil">
         </Button>
         <RelativeLayout
-            android:layout_below="@id/btnSolis"
+            android:layout_below="@id/btnNoti"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclernotificaciones"
+                android:id="@+id/recyclersolicitudes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>
     </RelativeLayout>
+
 </FrameLayout>
