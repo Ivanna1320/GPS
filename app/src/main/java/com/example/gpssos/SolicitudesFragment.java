@@ -13,30 +13,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.example.gpssos.Adaptadores.Adapternoti;
-import com.example.gpssos.modelos.notificaciones;
+import com.example.gpssos.Adaptadores.Adaptersolis;
+import com.example.gpssos.modelos.solicitudes;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
-public class NotificacionesFragment extends Fragment {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SolicitudesFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class SolicitudesFragment extends Fragment {
 
-    //public Button btnsolicitudes;
     RecyclerView mRecycler;
-    Adapternoti mAdapter;
+    Adaptersolis mAdapter;
     FirebaseFirestore mFirestore;
     FirebaseAuth mAuth;
-    //declaramos el fragment que vamos a utilizar para remplazar
-    SolicitudesFragment vSolicitudes = new SolicitudesFragment();
 
-    RelativeLayout vNoti;
-
-    public NotificacionesFragment() {
+    public SolicitudesFragment() {
         // Required empty public constructor
+    }
+
+    public static SolicitudesFragment newInstance(String param1, String param2) {
+        SolicitudesFragment fragment = new SolicitudesFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -44,59 +50,49 @@ public class NotificacionesFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate the layout for this fragment
         LayoutInflater in = getLayoutInflater();
-        View vi = in.inflate(R.layout.fragment_notificaciones, container, false);
-        vNoti = vi.findViewById(R.id.Contenedor_notificaciones);
+        View vi = in.inflate(R.layout.fragment_solicitudes, container, false);
 
-        final Button btnsolicitudes = vi.findViewById(R.id.btnSolis);
+        final Button btnNotificaciones = vi.findViewById(R.id.btnNoti);
 
-        mRecycler = vi.findViewById(R.id.recyclernotificaciones);
+        mRecycler = vi.findViewById(R.id.recyclersolicitudes);
         mFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Query query =mFirestore.collection("user").document(mAuth.getUid()).collection("idNotificaciones");
+        Query query =mFirestore.collection("user").document(mAuth.getUid()).collection("idSolicitudes");
 
-        FirestoreRecyclerOptions<notificaciones> firestoreRecyclerOptions =
-                new FirestoreRecyclerOptions.Builder<notificaciones>().setQuery(query, notificaciones.class).build();
+        FirestoreRecyclerOptions<solicitudes> firestoreRecyclerOptions =
+                new FirestoreRecyclerOptions.Builder<solicitudes>().setQuery(query, solicitudes.class).build();
 
-        mAdapter = new Adapternoti(firestoreRecyclerOptions);
+        mAdapter = new Adaptersolis(firestoreRecyclerOptions,getActivity());
         mAdapter.notifyDataSetChanged();
         mRecycler.setAdapter(mAdapter);
 
-        btnsolicitudes.setOnClickListener(new View.OnClickListener() {
+        btnNotificaciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                loadFragment(vSolicitudes);
-                vNoti.setVisibility(View.GONE);
             }
         });
-        // Inflate the layout for this fragment
-        //inflater.inflate(R.layout.fragment_notificaciones, container, false);
         return vi;
-
     }
+
     @Override
     public void onStart() {
         super.onStart();
         mAdapter.startListening();
     }
+
     @Override
     public void onStop() {
         super.onStop();
         mAdapter.stopListening();
     }
-    public void loadFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getChildFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.vistaNotificaciones,vSolicitudes);
-        transaction.commitNow();
 
-    }
+
 }

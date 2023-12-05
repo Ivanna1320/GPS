@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/contenedor_perfil"
     tools:context=".PerfilFragment">
 
     <RelativeLayout
+        android:id="@+id/Vperfil"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -184,8 +186,4 @@
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-
-    <!-- TODO: Update blank fragment layout -->
-
-
 </FrameLayout>

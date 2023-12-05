@@ -1,8 +1,8 @@
 package com.example.gpssos;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import org.checkerframework.common.subtyping.qual.Bottom;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,11 +53,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
 
+    }
+    @Override
+    public void onBackPressed() {
+        // Obtén el FragmentManager
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // Verifica si hay fragmentos en la pila de retroceso
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            // Si hay fragmentos en la pila, realiza un pop del último fragmento agregado
+            fragmentManager.popBackStack();
+        } else {
+            // Si no hay fragmentos en la pila, deja que la actividad maneje el evento de retroceso
+            super.onBackPressed();
+        }
+    }
     public void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_conteiner, fragment);
         transaction.commitNow();
     }
+
 }
